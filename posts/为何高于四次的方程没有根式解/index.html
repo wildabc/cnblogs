@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-cn" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="" />
+	
+	
+	
+	<title>为何高于四次的方程没有根式解？ ｜ 枣木夹子</title>
+	
+    
+    
+    <meta name="description" content="又见于知乎为何从五次方程开始就没有加减乘除开方的求根公式了？的回答。 可能不少人上学的时候都曾对这个问题感兴趣，至少我是一个。无意间在知乎上看" />
+    
+
+    
+
+	
+    
+    <link rel="shortcut icon" href="https://wildabc.github.io/cnblogs/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/highlight.css" />
+
+    
+    
+    <link rel="stylesheet" href="https://wildabc.github.io/cnblogs/css/custom.css" />
+    
+</head>
+
+<body>
+    <div class="main animate__animated animate__fadeInDown">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul>
+            
+            <li>
+                <a href="/cnblogs/posts/">总目</a>
+            </li>
+            
+            <li>
+                <a href="/cnblogs/tags/">标签</a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://wildabc.github.io/cnblogs/">
+                    <span>枣木夹子</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title"></p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/wildabc/" title="github" target="_blank"><i class="ri-github-fill"></i></a>
+                
+                
+                
+                <a href="mailto:wildabc@qq.com" title="mail" target="_blank"><i class="ri-mail-fill"></i></a>
+                
+                
+                <a href="" type="application/rss+xml" title="rss" target="_blank"><i
+                        class="ri-rss-fill"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2><a href='/cnblogs/posts/%E4%B8%BA%E4%BD%95%E9%AB%98%E4%BA%8E%E5%9B%9B%E6%AC%A1%E7%9A%84%E6%96%B9%E7%A8%8B%E6%B2%A1%E6%9C%89%E6%A0%B9%E5%BC%8F%E8%A7%A3/'>为何高于四次的方程没有根式解？</a></h2>
+                        <span class="date">2015.07.23</span>
+                    </div>
+                    <div class="post_content markdown">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.css" integrity="sha384-Cqd8ihRLum0CCg8rz0hYKPoLZ3uw+gES2rXQXycqnL5pgVQIflxAUDS7ZSjITLb5" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.js" integrity="sha384-1Or6BdeNQb0ezrmtGeqQHFpppNd7a/gw29xeiSikBbsb44xu3uAo8c7FwbF5jhbd" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+
+<p><span style="color: #000080; font-size: 16px;">又见于知乎<a class="question_link" href="http://www.zhihu.com/question/29316970/answer/55612053">为何从五次方程开始就没有加减乘除开方的求根公式了？</a>的回答。</span></p>
+<p>可能不少人上学的时候都曾对这个问题感兴趣，至少我是一个。无意间在知乎上看到这个问题，又勾起了自己的兴趣，然后就上网、找书钻研了一番。我不是学数学的，我对问题的理解肯定有不准确的地方，所以这里算不上回答了这个问题，只是把自己的心得和大家分享一下。虽然里面有比较多的公式和概念，希望是比较好懂的，能对同样感兴趣的人有点启发。</p>
+<p>先来一个简单的说明。整数通过加减乘除得到有理数，有理数没有填满实数轴，其中还有间隙，即存在着无理数。将有理数进行扩展，四项运算之外，再加上开方运算，经过这样计算后得到的数已拓展到了复平面，但其实并没有填满复平面，其中仍有间隙，而方程的根往往就落在这些间隙中，次数小于等于四次的方程的根只是恰好避开了这些间隙罢了。即便将方程的根再补上去，得到的数依然不能填满复平面，还存在着超越数（即圆周率<span class="math">\(\pi\)</span>，自然对数底<span class="math">\(e\)</span>之类）。</p>
+<p>接下来是正餐。</p>
+<p><span class="math">\(n\)</span>次方程的一般形式为</p>
+<p><span class="math">\[x^n+c_1 x^{n-1}+c_2 x^{n-2}+\cdots+c_{n-1}x+c_n=0\]</span></p>
+<p>要分析方程有没有根式解，先从根应该满足的关系入手。单独来看，每个根当然都应满足方程，而合起来看，根相互之间又有怎样的关系呢？设方程的根为<span class="math">\(x_1,x_2,\ldots,x_n\)</span>，则方程左边可分解为<span class="math">\((x-x_1)(x-x_2)\cdots(x-x_n)\)</span>，将其展开，再和方程的系数对比，可得：</p>
+<p><span class="math">\[-(x_1+x_2+\cdots+x_n)=c_1\]</span> <span class="math">\[x_1 x_2+x_1 x_3+\cdots+x_{n-1} x_n=c_2\]</span> <span class="math">\[\vdots\]</span> <span class="math">\[(-1)^n x_1 x_2 \cdots x_n=c_n\]</span></p>
+<p>这便是<strong>韦达定理</strong>，中学课本里介绍的只是二次方程时的情况。上面这些式子有一个共同的特点，<span class="math">\(x_1,x_2,\ldots,x_n\)</span>在式中的位置均是等同的，任意交换两个根的位置，比如<span class="math">\(x_1,x_2\)</span>，并不会改变式子的形式，也即它们都是关于根的对称多项式，称为方程的<strong>基本对称多项式</strong>。</p>
+<p>方程的求解也可以理解为将上面<span class="math">\(n\)</span>个基本对称多项式组成方程组，求解<span class="math">\(n\)</span>个未知量<span class="math">\(x_1,x_2,\ldots,x_n\)</span>的值的过程。以大家最熟悉的二次方程<span class="math">\(ax^2+bx+c=0\)</span>为例，按韦达定理，有<span class="math">\(x_1+x_2 = -\frac b a,\; x_1 x_2 = \frac c a\)</span>，利用这两式构造</p>
+<p><span class="math">\[(x_1-x_2)^2 = (x_1+x_2)^2-4 x_1 x_2 = \left(-\frac b a\right)^2-4\frac c a = \frac{b^2-4ac}{a^2}\]</span></p>
+<p>所以，<span class="math">\(x_1-x_2=\pm\frac{\sqrt{b^2-4ac}}a\)</span>，最后</p>
+<p><span class="math">\[x_1=\frac{(x_1+x_2)+(x_1-x_2)}2 = \frac{-b\pm\sqrt{b^2-4ac}}{2a}\]</span> <span class="math">\[x_2=\frac{(x_1+x_2)-(x_1-x_2)}2 = \frac{-b\mp\sqrt{b^2-4ac}}{2a}\]</span></p>
+<p>可以证明，所有的根式求解都可理解为这样从已知多项式逐步化简，从而得到根的值的过程。在化简的过程中，除了多项式，还可能出现两个多项式相除形成的分式，这样的式子被称为<strong>有理式</strong>。如果分母为1或只是常数，那么这样的有理式其实就是多项式，所以从多项式扩展到有理式，就类似于从整数扩展到有理数。考虑到大家可能并不熟悉有理式，本文的例子中又没有出现，所以本文的讨论中只是谈多项式，不过读者应该知道，后文中的&ldquo;多项式&rdquo;，其实是可以替为&ldquo;有理式&rdquo;的，而且这样替换后的表述才是更完整的。</p>
+<p>二次方程的根的表达式大家应该是比较熟悉的，这里写成这种形式，可以突出一点：如果考虑根的顺序，则方程的解的两种取值（不考虑重根的情形）。任取一种定为&ldquo;原本的&rdquo;，比如<span class="math">\(x_1^*=\frac{-b+\sqrt{b^2-4ac}}{2a}, x_2^*=\frac{-b-\sqrt{b^2-4ac}}{2a}\)</span>，则解的两种取值为<span class="math">\(x_1=x_1^*, x_2=x_2^*\)</span>和<span class="math">\(x_1=x_2^*, x_2=x_1^*\)</span>。作为初始条件的<span class="math">\(x_1+x_2,x_1 x_2\)</span>是对称多项式，在<span class="math">\(x_1,x_2\)</span>的两种取值下，这两式的值是不变的，对这两式做四则运算，得到的多项式仍是单值的，而开方运算后得到的<span class="math">\(x_1-x_2\)</span>，它有两值<span class="math">\(x_1^*-x_2^*\)</span>和<span class="math">\(x_2^*-x_1^*\)</span>，从而最终结果<span class="math">\(x_1,x_2\)</span>也是两值。<span class="math">\(x_1=x_2^*, x_2=x_1^*\)</span>可以理解为以原<span class="math">\(x_2\)</span>替换<span class="math">\(x_1\)</span>、原<span class="math">\(x_1\)</span>替换<span class="math">\(x_2\)</span>，而<span class="math">\(x_1=x_1^*, x_2=x_2^*\)</span>也可理解为以原<span class="math">\(x_1\)</span>替换<span class="math">\(x_1\)</span>、原<span class="math">\(x_2\)</span>替换<span class="math">\(x_2\)</span>，一种不改变值的替换。像这样按根的某种排列，作相应的替换，称为<strong>根的置换</strong>。二次方程有两个根，有两种根的置换，在两种置换下，多项式<span class="math">\(x_1+x_2\)</span>是单值的，而<span class="math">\(x_1-x_2\)</span>是两值的。</p>
+<p>从二次方程推广到<span class="math">\(n\)</span>次方程。<span class="math">\(n\)</span>次方程的根的置换的总数即它们的全排列，即<span class="math">\(n\)</span>的阶乘。这里不考虑有重根的的情形，因为有重根的方程总可以分解为若干个无重根的方程。如前所示，有<span class="math">\(n\)</span>个值为方程系数的多项式作为已知量，这些多项式均为对称多项式，在全部置换的作用下，它们只有唯一的值。然后，利用这些已知的多项式进行化简。所谓化简，也就是设法构造出一些一次多项式，利用这些一次多项式组成方程组，就可以算出各个根的数值了。在降低多项式次数的过程中，开<span class="math">\(i\)</span>次方后得到的多项式在全部置换的作用下有<span class="math">\(i\)</span>种值，再开<span class="math">\(j\)</span>次方，在全部置换的作用下有<span class="math">\(ij\)</span>种值。由于最终的根有<span class="math">\(n!\)</span>种取值，可以想见，我们最终需要得到在全部置换的作用下有<span class="math">\(n!\)</span>种值一次多项式。假定我们得到了一个一次式<span class="math">\(a_1x_1+a_2x_2+\cdots+a_nx_n\)</span>，它有<span class="math">\(n!\)</span>种值<span class="math">\(\theta_1,\theta_2,\ldots,\theta_{n!}\)</span>。对这个一次式应用一个置换，则变为另一形式的一次式，而它的数值仍在<span class="math">\(\theta_1,\theta_2,\ldots,\theta_{n!}\)</span>中取值。不妨对每个置换后得到的式子给定一个值，比如，原顺序的式子<span class="math">\(a_1x_1+a_2x_2+\cdots+a_nx_n=\theta_1\)</span>，而交换<span class="math">\(x_1,x_2\)</span>后的<span class="math">\(a_1x_2+a_2x_1+\cdots+a_nx_n=\theta_2\)</span>，像这样，通过一个一次式便得到<span class="math">\(n!\)</span>个一次方程。方程的数量超过了未知数的数量，可是并不能保证方程组有唯一解，还可能发生矛盾。如果学过大学线性代数，应对此有更好的理解。这里直接给出结论，这<span class="math">\(n!\)</span>个一次方程并不存在矛盾，但还真不够确定唯一的解，不过加上<span class="math">\(-(x_1+x_2+\cdots+x_n)=c_1\)</span>之后，便可形成完整的方程组，求出方程的根。</p>
+<p>上面写的过程比较抽象，再非常简要地介绍一下三次方程的求解过程，以便更好地理解。在常见的求解三次方程的介绍中，第一步就用代换消去了二次项，后面的过程也就简单了不少。这里直接针对一般形式的三次方程，算式略为复杂一些。三次方程<span class="math">\(x^3+c_1 x^2+c_2 x+c_3=0\)</span>的基本对称多项式为<span class="math">\(-(x_1+x_2+x_3)=c_1\)</span>, <span class="math">\(x_1 x_2+x_1 x_3+x_2 x_3=c_2\)</span>, <span class="math">\(-x_1x_2x_3=c_3\)</span>。首先</p>
+<p><span class="math">\[(x_1-x_2)^2(x_1-x_3)^2(x_2-x_3)^2=c_1^2c_2^2+18c_1c_2c_3-4c_2^2-4c_1^3c_3-27c_3^2\]</span></p>
+<p>这里没有将<span class="math">\(c_1, c_2, c_3\)</span>用<span class="math">\(x_1, x_2, x_3\)</span>表达，否则就太复杂了。开平方后求得<span class="math">\((x_1-x_2)(x_1-x_3)(x_2-x_3)\)</span>，它有两个值。</p>
+<p>1有3个3次方根：<span class="math">\(1, \frac{-1+\sqrt3i}2, \frac{-1-\sqrt3i}2\)</span>，令<span class="math">\(\omega\)</span>为后两个中的任一个，有</p>
+<p><span class="math">\[(x_1+\omega x_2+\omega^2 x_3)^3=\frac{-2c_1^3+9c_1c_2-27c_3+3\sqrt3i(x_1-x_2)(x_1-x_3)(x_2-x_3)}2\]</span></p>
+<p>开3次方后求得<span class="math">\(x_1+\omega x_2+\omega^2 x_3\)</span>，它有6个值。利用它可得到6个一次方程，其中只有两个独立的，再加上<span class="math">\(-(x_1+x_2+x_3)=c_1\)</span>，便可算得最终结果。</p>
+<p>前面颇为啰嗦地说了这么多，似乎只是在玩文字游戏，从一种很怪异的角度来解释根的求解过程，又是根的多项式，又是根的置换，究竟有什么意义呢？某个根的多项式在全部置换的作用下有若干种值，将取值相等的置换归在一组，则这个多项式也就相应地将全部置换分成了若干组。基础对称多项式只有一种值，全部置换都在一个组里，开<span class="math">\(i\)</span>次方后得到的多项式有<span class="math">\(i\)</span>种值，置换相应地被分为<span class="math">\(i\)</span>组，再开<span class="math">\(j\)</span>次方，置换被进一步分为<span class="math">\(ij\)</span>组，最终，置换被分为<span class="math">\(n!\)</span>组，每组只有一个置换。为了完整性，需要指出，在求解过程中出现的各个多项式并不一定取值越来越多，某些计算中也会减少，不过，考虑到我们想得到的是有<span class="math">\(n!\)</span>种值一次多项式，我们希望构造出的多项式取值越来越多。如果某种求解方法中出现了取值减少的情况，就说明走了回头路，而且事实上总可以找到方法避开这样的回头路。再引入一些概念，进一步分析这种置换的分组应满足怎样的性质，以及能否找到满足这样性质的分组，便可带我们达到问题的答案。</p>
+<p>从这以后的部分，数学概念很多，而解释说明却较简短，因为不这样就要写成一本小书了，不过我希望这部分，至少从大概的意思上，仍然是不难理解的。对于没有耐心看下去的，结论显然也不难猜到：一般情况下，我们是找不到满足性质的分组的，也就无法找到方程的根式解。</p>
+<p>前面二次方程的求解中用到了<span class="math">\((x_1-x_2)^2\)</span>，它的值为<span class="math">\(\frac{b^2-4ac}{a^2}\)</span>，也就是中学课本里的根的判别式乘以<span class="math">\(1/a^2\)</span>。所谓根的判别式，即根据式子的符号来判别根的性质，乘以某个正数并不影响这样的&ldquo;判别&rdquo;，所以<span class="math">\((x_1-x_2)^2\)</span>也可称为根的判别式，而且写成这一形式使人更容易看清它为什么能判别根的性质。三次方程的求解中也用到了<span class="math">\((x_1-x_2)^2(x_1-x_3)^2(x_2-x_3)^2\)</span>这样的式子，我们将它推广到更一般的情况，令</p>
+<p><span class="math">\[\Delta^2 = \prod_{1\leq i&lt;j\leq n} (x_i-x_j)^2\]</span></p>
+<p>等式右边表示所有<span class="math">\(1\leq i&lt;j\leq n\)</span>的<span class="math">\((x_i-x_j)^2\)</span>的乘积，共有<span class="math">\(C_n^2\)</span>项，称为方程的根的判别式。下面分析性质时，如果觉得比较抽象，可以看看三次方程时的表达式（后面可见四次方程时的表达式）。这是一个对称多项式，可以由基本对称多项式，也就是方程的系数算得。既然是对称多项式，所有的置换都不改变它的值。开平方，其中一个值是</p>
+<p><span class="math">\[\Delta = \prod_{1\leq i&lt;j\leq n} (x_i-x_j)\]</span></p>
+<p>添加负号后就是另一个值，而置换可使得式子在两个值之间变换。先看置换中较简单的一种：交换某两个根的位置，称为对换。执行一次对换，会改变上式的符号，而再做一次任意的对换，负负得正，又回到了原来的值，类似地，做4次或6次对换，也会保持式子的值不变。这里涉及到了先做一个置换，再做另一个置换，将这样的复合定义为<strong>置换的乘法</strong>。<span class="math">\(a \cdot b\)</span>即表示先做置换<span class="math">\(a\)</span>，再做置换<span class="math">\(b\)</span>，复合而成的置换。比如，<span class="math">\(a\)</span>表示对换<span class="math">\(x_1, x_2\)</span>，<span class="math">\(b\)</span>表示对换<span class="math">\(x_2, x_3\)</span>，则<span class="math">\(a \cdot b\)</span>将序列<span class="math">\((x_1 x_2 x_3)\)</span>变为<span class="math">\((x_2 x_3 x_1)\)</span>（做了置换<span class="math">\(a\)</span>后，<span class="math">\(x_2\)</span>对应的是原来的<span class="math">\(x_1\)</span>，<span class="math">\(x_1\)</span>对应的是原来的<span class="math">\(x_2\)</span>）。这里介绍一下置换的记法，以3个根的情形为例，3个根的的自然顺序为<span class="math">\((x_1 x_2 x_3)\)</span>，在前面的例子中，<span class="math">\(a\)</span>将此序列变为<span class="math">\((x_2 x_1 x_3)\)</span>，根据变换后的下标，将<span class="math">\(a\)</span>记为<span class="math">\((213)\)</span>，同样地，<span class="math">\(b\)</span>记为<span class="math">\((132)\)</span>，那么两者相乘便是<span class="math">\((213)\cdot(132)=(231)\)</span>。下面简单地给出一些置换的乘法的性质，有兴趣的可以自己试验一下。置换的乘法满足结合律，但不满足交换律。保持原顺序不变的置换有特殊的记号<span class="math">\(e\)</span>，它和任意置换<span class="math">\(a\)</span>相乘，都有<span class="math">\(a \cdot e = e \cdot a = a\)</span>，类似于数字1在普通乘法中的性质，所以将<span class="math">\(e\)</span>称为单位置换。对于任意一个置换<span class="math">\(a\)</span>，总可以找到一个置换<span class="math">\(b\)</span>，而且只有这样一个，使得<span class="math">\(a \cdot b = b \cdot a = e\)</span>，<span class="math">\(b\)</span>称为<span class="math">\(a\)</span>的逆，记为<span class="math">\(b = a^{-1}\)</span>。</p>
+<p>讨论了置换的乘法后，再回到<span class="math">\(\Delta\)</span>。偶数个对换的乘积作用后，<span class="math">\(\Delta\)</span>保持不变，而奇数个对换的乘积作用在<span class="math">\(\Delta\)</span>上则改变其符号。实际上，所有的置换都可分解为若干对换的乘积，这样的分解不是唯一的，但其中有奇数个还是偶数个对换则是一定，根据这一点，可将置换分为<strong>奇置换</strong>和<strong>偶置换</strong>两类。于是，偶置换是保持<span class="math">\(\Delta\)</span>不变的置换，而奇置换则改变<span class="math">\(\Delta\)</span>的符号，也就是变为它的另一种取值。注意到，偶置换和偶置换的乘积还是偶置换，偶置换的逆也还是偶置换。对于一组置换，如果置换的乘积还在这一组中，并且置换的逆也在这一组中，就把这组置换称为<strong>置换群</strong>（两个条件中，第二条是可以从第一条推出的，本文略去此推导，将两条并列给出）。本文只涉及置换群，将&ldquo;置换&rdquo;两字省去，简称群。于是，全体偶置换构成一个群，它是所有保持<span class="math">\(\Delta\)</span>的值不变的置换构成的群，称为<span class="math">\(\Delta\)</span>的<strong>不变群</strong>。每个根的多项式都有它的不变群。显然，全部置换也构成一个群，它是所有对称多项式的不变群，此群称为<strong>对称群</strong>。像<span class="math">\(\Delta\)</span>这样的多项式，执行一次对换，变为负值，再做一次对换，又变为正值，如此继续下去，便形成一个正负交错的序列，于是这类多项式被称为交错多项式。它的不变群，即全体偶置换构成的群，也就称为<strong>交错群</strong>。<span class="math">\(n\)</span>次方程所对应的对称群中置换的数量为<span class="math">\(n!\)</span>，相应的交错群中置换的数量则为<span class="math">\(n!/2\)</span>，将它们分别称为<span class="math">\(n\)</span>次对称群和<span class="math">\(n\)</span>次交错群。交错群是对称群中的一部分置换构成的群，称前者为后者的<strong>子群</strong>。一般，群本身也被视为它自己的子群。置换和它的逆的乘积为单位置换，所以按群的定义，群中必包含单位置换。并且，单独一个单位置换便可构成群，这个群被称为<strong>单位群</strong>，它可以是任何群的子群。</p>
+<p>从群的角度来看从<span class="math">\(\Delta^2\)</span>到<span class="math">\(\Delta\)</span>的过程，<span class="math">\(\Delta^2\)</span>的不变群为对称群，开平方后，对称群中的置换相应地被分为两组，一组为全部的偶置换，即<span class="math">\(\Delta\)</span>的不变群，另一组则是全部的奇置换。前一组是对称群的一个子群，其他组被称为子群的<strong>陪集</strong>。这里是开平方，所以只有一个陪集。</p>
+<p>接下来分析开方次数更为一般的情形。假设我们构造了一个可写为若干次乘方的多项式，记为<span class="math">\(\phi^k\)</span>。<span class="math">\(\phi^k\)</span>本身可能有若干种取值，其中一种对应于<span class="math">\(\phi^k\)</span>的不变群<span class="math">\(G\)</span>，开方后，对应于<span class="math">\(\phi^k\)</span>的这一值，<span class="math">\(\phi\)</span>有<span class="math">\(k\)</span>种值。根据置换作用于<span class="math">\(\phi\)</span>后的取值，群<span class="math">\(G\)</span>中的置换相应地被分为<span class="math">\(k\)</span>组，它们是<span class="math">\(\phi\)</span>的不变群<span class="math">\(H\)</span>，以及<span class="math">\(H\)</span>的陪集<span class="math">\(H_1,H_2,\ldots,H_{k-1}\)</span>，将各组的取值记为<span class="math">\(\phi_H = r_0,\phi_{H_1} = r_1,\phi_{H_2} = r_2,\ldots,\phi_{H_{k-1}} = r_{k-1}\)</span>。每组的中置换的数量应是相等的，为<span class="math">\(G\)</span>置换数量的<span class="math">\(1/k\)</span>，我们称<span class="math">\(H\)</span>是<span class="math">\(G\)</span>的<strong>指数</strong>为<span class="math">\(k\)</span>的子群。某一置换<span class="math">\(s\)</span>作用于<span class="math">\(\phi\)</span>后的取值记为<span class="math">\(\phi_s\)</span>，假设<span class="math">\(\phi_s = r_1\)</span>，这说明<span class="math">\(s\)</span>是<span class="math">\(H_1\)</span>中的置换。对于置换对多项式的作用，可以从不同的角度去理解，比如，对换<span class="math">\(x_1,x_2\)</span>将<span class="math">\((x_1-x_2)(x_1-x_3)(x_2-x_3)\)</span>变为<span class="math">\((x_2-x_1)(x_2-x_3)(x_1-x_3)\)</span>，也可理解为式子仍为<span class="math">\((x_1-x_2)(x_1-x_3)(x_2-x_3)\)</span>，只是<span class="math">\(x_1\)</span>取原来<span class="math">\(x_2\)</span>的值，而<span class="math">\(x_2\)</span>取原来<span class="math">\(x_1\)</span>的值，所以<span class="math">\(\phi\)</span>的不变群<span class="math">\(H\)</span>中的置换同样能保持置换后式子的值不变，即对于<span class="math">\(H\)</span>中的置换<span class="math">\(\sigma\)</span>，<span class="math">\(\phi_{s\sigma} = \phi_s = r_1\)</span>，说明<span class="math">\(s\sigma\)</span>是<span class="math">\(H_1\)</span>中的置换。这样的乘积的数量等于<span class="math">\(H\)</span>中置换的数量，也就等于<span class="math">\(H_1\)</span>中置换的数量，所以，<span class="math">\(H_1\)</span>中所有置换都可写为这种形式。于是，<span class="math">\(H_1,H_2,\ldots,H_{k-1}\)</span>，以及<span class="math">\(H\)</span>本身，都可以看作某个置换与<span class="math">\(H\)</span>中的全部置换相乘所形成的一组置换。因此，某种程度上，可以说陪集是子群的&ldquo;影子&rdquo;，所以，在分析置换的分组时，只需关注群和子群的关系即可。</p>
+<p>那么，群和伴随着开方运算形成的子群应满足怎样的关系呢？前面已经得到，对于<span class="math">\(G\)</span>中的任一置换<span class="math">\(s\)</span>，<span class="math">\(H\)</span>中的任一置换<span class="math">\(\sigma\)</span>，<span class="math">\(\phi_{s\sigma} = \phi_s\)</span>，两边均再作用<span class="math">\(s\)</span>的逆，<span class="math">\(\phi_{s\sigma s^{-1}} = \phi_{s s^{-1}} = \phi_e = r_0\)</span>，这意味着<span class="math">\(s\sigma s^{-1}\)</span>是<span class="math">\(H\)</span>中置换。我们将这一关系记为<span class="math">\(sHs^{-1}=H\)</span>，称满足这一关系的子群称为<strong>正规子群</strong>。于是，开方后得到的多项式的不变群应是原多项式的不变群的正规子群。在根的求解中，一系列多项式以开方运算联系起来，它们的不变群形成一个序列，其中每个都是前一个的正规子群。开始时，已知的一般只有基本对称多项式，它们的不变群是对称群，最后我们要得到的是有<span class="math">\(n!\)</span>种值一次多项式，它的不变群是单位群。这样的过程还可以分得更细。如果<span class="math">\(k\)</span>是合数，可分解为若干素数的乘积<span class="math">\(k = p_1p_2\cdots p_m\)</span>，那么从<span class="math">\(\phi^k\)</span>到<span class="math">\(\phi\)</span>的过程可分解为先开<span class="math">\(p_m\)</span>次方得到<span class="math">\(\phi^{p_1p_2\cdots p_{m-1}}\)</span>，再开<span class="math">\(p_{m-1}\)</span>次方得到<span class="math">\(\phi^{p_1p_2\cdots p_{m-2}}\)</span>，若干步后才得到<span class="math">\(\phi\)</span>。在这一系列多项式的不变群构成的序列中，每个都是前一个的指数为素数的正规子群。于是，方程的根式求解过程对应于一个群的序列，第一个为已知多项式的不变群，一般为对称群，最后一个是单位群，每个群都是前面的群的指数为素数的正规子群。<strong>如果方程是根式可解的，必存在这样的群的序列，如果存在这样的群的序列，则方程必是根式可解的</strong>。</p>
+<p>以前面给出的三次方程的求解过程为例来帮助理解这一大堆概念。一开始，我们构造了多项式<span class="math">\((x_1-x_2)^2(x_1-x_3)^2(x_2-x_3)^2\)</span>，它的不变群是3次对称群，共6个置换：</p>
+<p><span class="math">\[(123),(312),(231),(213),(132),(321)\]</span></p>
+<p>开平方后，得到<span class="math">\((x_1-x_2)(x_1-x_3)(x_2-x_3)\)</span>，它的不变群是3次交错群，有3个置换，也就是上面6个置换中的前3个。然后，通过这一式和基本对称多项式，我们得到了<span class="math">\((x_1+\omega x_2+\omega^2 x_3)^3\)</span>，在这一步，不变群没有改变，仍是3次交错群。开3次方，得到<span class="math">\(x_1+\omega x_2+\omega^2 x_3\)</span>，它的不变群是单位群。于是，这种三次方程的解法便对应于一个群的序列：3次对称群 <span class="math">\(\xrightarrow{2}\)</span> 3次交错群 <span class="math">\(\xrightarrow{3}\)</span> 单位群，箭头上的数字表示后面的群作为前面的群的正规子群时的指数。</p>
+<p>3次对称群只有6个置换，所以上面的过程也很简单。再举四次方程的情况作例子。大部分书籍中介绍的四次方程的解法是最早提出的方法，由费拉里发明。具体的解法这里就不写了，只提示一点，在费拉里的方法中，首先求解一个三次方程，实际上，这个三次方程中的未知数等于<span class="math">\(x_1x_2+x_3x_4\)</span>，而它的判别式等于原四次方程的判别式，下面仅给出过程中关键的多项式及它们的不变群。</p>
+<ol style="list-style-type: decimal;">
+<li><span class="math">\((x_1-x_2)^2(x_1-x_3)^2(x_1-x_4)^2(x_2-x_3)^2(x_2-x_4)^2(x_3-x_4)^2\)</span>，不变群为4次对称群；</li>
+<li><span class="math">\((x_1-x_2)(x_1-x_3)(x_1-x_4)(x_2-x_3)(x_2-x_4)(x_3-x_4)\)</span>，不变群为4次交错群；</li>
+<li><span class="math">\(x_1x_2+x_3x_4+\omega (x_1x_3+x_2x_4)+\omega^2 (x_1x_4+x_2x_3)\)</span>，不变群为<span class="math">\(\{(1234),(2143),(3412),(4321)\}\)</span>；</li>
+<li><span class="math">\((x_1-x_2+ix_3-ix_4)^2\)</span>，不变群为<span class="math">\(\{(1234),(2143)\}\)</span>；</li>
+<li><span class="math">\(x_1-x_2+ix_3-ix_4\)</span>，不变群为单位群。</li>
+</ol>
+<p>所以，这种四次方程的解法便对应于一个群的序列：4次对称群 <span class="math">\(\xrightarrow{2}\)</span> 4次交错群 <span class="math">\(\xrightarrow{3}\)</span> <span class="math">\(\{(1234),(2143),(3412),(4321)\}\)</span> <span class="math">\(\xrightarrow{2}\)</span> <span class="math">\(\{(1234),(2143)\}\)</span> <span class="math">\(\xrightarrow{2}\)</span> 单位群。</p>
+<p>利用群的语言进行分析，我们已经将方程的根式求解与满足一定性质的群的序列联系起来，根据这样的序列是否存在，便能判定方程能否根式求解。前面已给出三次和四次时群的序列（二次方程就不用写了吧？），那么高于四次时的情况又如何呢？如果我们每一步都能找到指数为素数的正规子群，直至得到单位群，就说明存在根式求解的方法，而且我们可在以这些群为不变群的多项式中找到合适的多项式，从而得到详细的求解方法。群都有两个特殊的子群，这个群本身和单位群，这两个子群也是正规子群，被称为<strong>平凡</strong>正规子群（每个人都有的东西就是平凡的）。不过，前者并不是我们想要正规子群，而后者也只有在群的置换的数量是素数时才是指数为素数的正规子群。直观上来想，正规子群所要满足的<span class="math">\(sHs^{-1}=H\)</span>是个不易达到的条件，因为<span class="math">\(s\)</span>是要取遍原群中所有置换的，要把这样的乘积约束在子群<span class="math">\(H\)</span>中，并不是一件简单的事。前面为了引入群的概念，以根的判别式作为例子，而这个例子实际上告诉我们，<span class="math">\(n\)</span>次对称群总有<span class="math">\(n\)</span>次交错群作为指数为2的正规子群。事实上，除<span class="math">\(n=4\)</span>的情况外，<span class="math">\(n\)</span>次对称群只有<span class="math">\(n\)</span>次交错群这唯一的非平凡的正规子群。不管怎样，我们迈出了第一步，那么然后呢？很可惜，一般情况下，就没有&ldquo;然后&rdquo;了。<strong><span class="math">\(n&gt;4\)</span>的<span class="math">\(n\)</span>次交错群没有非平凡的正规子群</strong>。证明如果完整写出来，是要占不少篇幅的，但思路其实很简单。先假设<span class="math">\(n&gt;4\)</span>的<span class="math">\(n\)</span>次交错群有一个不是单位群的正规子群<span class="math">\(H\)</span>，<span class="math">\(H\)</span>应该包含形如<span class="math">\(sHs^{-1}\)</span>的置换，还有更基本的，作为一个群，<span class="math">\(H\)</span>应该包含自身置换的乘积和逆，反复利用这些要求，<span class="math">\(H\)</span>需要包含的置换越来越多，最后包含了所有的偶置换，也就是说<span class="math">\(H\)</span>就是<span class="math">\(n\)</span>次交错群本身，这样便证明了这一命题。在高于四次的情况下，没有非平凡的正规子群也就意味着没有指数为素数的正规子群，也就不可能找到满足要求的群的序列，于是，我们得出结论：<strong>一般形式的高于四次的方程没有根式解</strong>。次数小于等于四次的方程只是由于<span class="math">\(n\leq4\)</span>的<span class="math">\(n\)</span>次交错群的置换非常少（4次交错群也只有12个置换），恰好可以找到要求的群的序列，所以存在根式解，在所有的方程中，只是特例罢了。</p>
+<p>故事到这里就应该结束了，不过，可能有人注意到了前面结论中的定语&ldquo;一般形式的&rdquo;，这就是说，还有&ldquo;特殊形式的&rdquo;高于四次的方程有根式解，这又是怎么回事呢？这里找一种特殊形式的方程来说明这一问题。<span class="math">\(n\)</span>次方程中形式最简单的之一就是<span class="math">\(x^n=1\)</span>。<span class="math">\(n\)</span>如果为合数，这个方程可分解为若干个次数为素数的同一形式的方程来求解，所以这里只考虑<span class="math">\(n\)</span>为素数的情况。假设我们找到了除1之外的某个数<span class="math">\(\rho\)</span>满足<span class="math">\(\rho^n=1\)</span>，那么<span class="math">\((\rho^k)^n=(\rho^n)^k=1\)</span>，于是，<span class="math">\(x_1=\rho^1,x_2=\rho^2,\ldots,x_n=\rho^n\)</span>就是方程的<span class="math">\(n\)</span>个根。由于根之间存在这样的幂次关系，我们可以写出<span class="math">\(x_1^i-x_i=0,x_ix_{n-i}=1\)</span>之类的关于根的多项式。于是，我们已知的根的多项式，除了一般的基本对称多项式，还多出了一类，而使这一类多项式保持不变的置换显然不可能像对称多项式那样任意。首先，在这类多项式中，<span class="math">\(x_n\)</span>(等于1)的地位是很特殊的，如果把它换到其他某个<span class="math">\(x_i\)</span>的位置上，就不可能找到<span class="math">\(x_{n-i}\)</span>保持<span class="math">\(x_ix_{n-i}=1\)</span>，所以保持这类多项式不变的置换都必须是不改变<span class="math">\(x_n\)</span>的。其次，假如某个置换用原<span class="math">\(x_k\)</span>替换<span class="math">\(x_1\)</span>，要保持<span class="math">\(x_1^i-x_i=0\)</span>，<span class="math">\(x_i\)</span>必须相应地取值<span class="math">\(\rho^{ik}\)</span>，将<span class="math">\(ik\)</span>除以<span class="math">\(n\)</span>的余数记为<span class="math">\(ik|n\)</span>，有<span class="math">\(\rho^{ik}=\rho^{ik|n}\)</span>，所以<span class="math">\(x_i\)</span>必须用原<span class="math">\(x_{ik|n}\)</span>替换。也就是说，只要<span class="math">\(x_1\)</span>位置的替换确定，其他位置的替换也就定了下来，再加上置换不能改动<span class="math">\(x_n\)</span>，所以这样的置换总共只有<span class="math">\(n-1\)</span>个。眼尖的人可能发现了，前面是说多项式有不变群，而在这里推导不变群的过程中，却用到了一组多项式，不过，对于一组多项式，总可以构造出这样的多项式，在这组的多项式都保持不变的情况下，这个多项式才保持不变（比如用合适的系数乘每个多项式，再全部相加）。对于方程<span class="math">\(x^n=1\)</span>，除了通常的对称多项式，还可利用这多出来的一类多项式来构造求解方程的一系列多项式，于是不变群的序列可以用这样只有<span class="math">\(n-1\)</span>个置换的群作为&ldquo;初始群&rdquo;。相较于一般情况下&ldquo;初始群&rdquo;为有<span class="math">\(n!\)</span>个置换的<span class="math">\(n\)</span>次对称群，问题简单了很多。</p>
+<p>问题简单了很多，并不代表就一定有解。在这<span class="math">\(n-1\)</span>个置换中，假设某个置换<span class="math">\(s\)</span>表示用原<span class="math">\(x_k\)</span>替换<span class="math">\(x_1\)</span>，这个置换使得<span class="math">\(x_i=\rho^{ik|n}\)</span>，另一置换<span class="math">\(\sigma\)</span>表示用原<span class="math">\(x_m\)</span>替换<span class="math">\(x_1\)</span>，这个置换则使<span class="math">\(x_i=\rho^{im|n}\)</span>。置换的乘积一般是不满足交换律的，不过对于这两个置换，乘积<span class="math">\(s\sigma\)</span>使得<span class="math">\(x_i=\rho^{ikm|n}\)</span>，而乘积<span class="math">\(\sigma s\)</span>使得<span class="math">\(x_i=\rho^{imk|n}\)</span>，说明两种乘积是相等的。将<span class="math">\(s\sigma=\sigma s\)</span>两边同乘以<span class="math">\(s^{-1}\)</span>，<span class="math">\(s\sigma s^{-1} = \sigma s s^{-1} = \sigma\)</span>，有了这个关系，任何一个子群<span class="math">\(H\)</span>都必定满足<span class="math">\(sHs^{-1}=H\)</span>，也即，每个子群都是正规子群。于是，根式求解要求的寻找对指数为素数的正规子群就简化为寻找对指数为素数的子群，而这总是能办到的（这当然需要证明，不过以本文介绍的这点知识很难讲清楚，只能请读者就这样接受），所以方程<span class="math">\(x^n=1\)</span>总存在根式解。</p>
+<p>可以注意到，在前面的论述中，其实并不一定要求方程的根像<span class="math">\(x^n=1\)</span>的根那样有特殊的幂次关系，只要已知的根的多项式能够使得&ldquo;初始群&rdquo;中的置换满足交换律，即可保证方程存在根式解。满足这一条件的方程称为<strong>阿贝尔方程</strong>，而其中置换满足交换律的群称为<strong>阿贝尔群</strong>。那么，究竟怎样的方程是根式可解的？如本文所述，这取决于是否存在满足条件的群的序列，严格的数学表述为：<strong>方程根式可解的充分必要条件是，方程的伽罗瓦群为可解群</strong>。所谓<strong>可解群</strong>，即可以构造从此群到单位群的序列，其中后面的群是前面的群的指数为素数的正规子群。对于根式求解问题，这样群的序列中的第一个，或者说&ldquo;初始群&rdquo;，应该取为已知的根的多项式的不变群中最小的那个，而<strong>伽罗瓦群</strong>，在非常粗糙的意义上，可理解为这里所说&ldquo;初始群&rdquo;。</p>
+<p>关于根式可解性问题的答案，如果不给出阿贝尔和伽罗瓦这两个名字，很难称得上完整。大致上说，阿贝尔首次证明了一般形式的高于四次的方程没有根式解，并且 讨论了一种可以根式解的特殊形式，即阿贝尔方程；伽罗瓦采用新的思路，做出了更为清晰的证明，提出了判断任一方程根式可解性的方法。伽罗瓦引入的新数学工 具，比如本文中介绍的&ldquo;群&rdquo;，不但在代数领域，而且对许多数学分支都产生了很大的影响，开创了一个新的时代。</p><br /><br /><p>写到这里，答案终于可以结束了，非常感谢看到此处的人，真心希望这个答案对你们有帮助。</p></div>
+                    <div class="post_footer">
+                        
+                        <div class="meta">
+                            <div class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                    <a href="https://wildabc.github.io/cnblogs/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                
+                <div class="doc_comments"></div>
+                
+            </div>
+        </div>
+    </div>
+    <a id="back_to_top" href="#" class="back_to_top"><i class="ri-arrow-up-s-line"></i></a>
+    <footer class="footer">
+    <div class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div class="footer_slogan">
+        <span></span>
+    </div>
+</footer>
+    <script src="https://wildabc.github.io/cnblogs/js/jquery-3.5.1.min.js"></script>
+<link href="https://wildabc.github.io/cnblogs/css/fancybox.min.css" rel="stylesheet">
+<script src="https://wildabc.github.io/cnblogs/js/fancybox.min.js"></script>
+<script src="https://wildabc.github.io/cnblogs/js/zozo.js"></script>
+
+
+
+
+</body>
+
+</html>

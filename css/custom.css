@@ -1,0 +1,13 @@
+a[type="application/rss+xml"] {
+    display: none;
+}
+
+.post_content p{
+    text-indent: 33px;
+    text-align: justify;
+    word-break: normal;
+}
+
+p.noindent{
+    text-indent: 0;
+}

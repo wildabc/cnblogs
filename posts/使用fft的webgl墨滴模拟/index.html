@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-cn" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="" />
+	
+	
+	
+	<title>使用FFT的WebGL墨滴模拟 ｜ 枣木夹子</title>
+	
+    
+    
+    <meta name="description" content="Evgeny Demidov写了很多精彩的WebGL例子。其中我最感兴趣的是墨滴模拟。我把计算方法做了点改动，自己实现了一个：（点击图片） 原来的页面用的" />
+    
+
+    
+
+	
+    
+    <link rel="shortcut icon" href="https://wildabc.github.io/cnblogs/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/highlight.css" />
+
+    
+    
+    <link rel="stylesheet" href="https://wildabc.github.io/cnblogs/css/custom.css" />
+    
+</head>
+
+<body>
+    <div class="main animate__animated animate__fadeInDown">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul>
+            
+            <li>
+                <a href="/cnblogs/posts/">总目</a>
+            </li>
+            
+            <li>
+                <a href="/cnblogs/tags/">标签</a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://wildabc.github.io/cnblogs/">
+                    <span>枣木夹子</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title"></p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/wildabc/" title="github" target="_blank"><i class="ri-github-fill"></i></a>
+                
+                
+                
+                <a href="mailto:wildabc@qq.com" title="mail" target="_blank"><i class="ri-mail-fill"></i></a>
+                
+                
+                <a href="" type="application/rss+xml" title="rss" target="_blank"><i
+                        class="ri-rss-fill"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2><a href='/cnblogs/posts/%E4%BD%BF%E7%94%A8fft%E7%9A%84webgl%E5%A2%A8%E6%BB%B4%E6%A8%A1%E6%8B%9F/'>使用FFT的WebGL墨滴模拟</a></h2>
+                        <span class="date">2012.04.30</span>
+                    </div>
+                    <div class="post_content markdown">
+<p>Evgeny Demidov写了很多精彩的<a href="http://www.ibiblio.org/e-notes/webgl/webgl.htm" target="_blank">WebGL例子</a>。其中我最感兴趣的是<a href="http://www.ibiblio.org/e-notes/webgl/gpu/droplet.htm" target="_blank">墨滴模拟</a>。我把计算方法做了点改动，自己实现了一个：（点击图片）</p>
+<a href="http://wildabc.github.com/WebGL/FFTDroplet.html" target="_blank"><img src="http://images.cnblogs.com/cnblogs_com/wildabc/fft_droplet.png" alt="FFT based droplet" style="border: 1px solid black" /></a>
+<p>原来的页面用的方法是Jos Stam的<a href="http://www.dgp.toronto.edu/people/stam/reality/Research/pub.html">Real-Time Fluid Dynamics for Games</a>和<a href="http://www.dgp.toronto.edu/people/stam/reality/Research/pub.html">Stable Fluid</a>，使用的是交错网格。不过在输运（不知道这是不是Advect的正确翻译）变量时，有些小问题，作者在页面上也做了注明。我总觉得其中以雅可比迭代解泊松方程显得有点&#8220;原始&#8221;，自己以前接触过用快速傅立叶解泊松方程，所以想试试。实际上如果使用FFT，不需要构造泊松方程，见Jos Stam的<a href="http://www.dgp.toronto.edu/people/stam/reality/Research/pub.html">A Simple Fluid Solver based on the FFT</a>，本例就是用的此方法。</p>
+<p>关于流体力学的基本知识，推荐Robert Bridson的<a href="http://www.dgp.toronto.edu/people/stam/reality/Research/pub.html">SIGGRAPH 2007 Course</a>。前列诸文献写得很好，这里只简要介绍一下基本知识和我使用的方法。对于这个仿真，可认为流体运动遵循不可压缩纳维叶－斯托克斯方程：</p>
+$$\frac{\partial \mathbf{u}}{\partial t} + \mathbf{u} \nabla \mathbf{u} + \frac1\rho \nabla p = \mathbf{f} + \nu \nabla\nabla \mathbf{u}$$
+$$\nabla \mathbf{u} = 0$$
+<p>前一个是动量方程，由牛顿第二定律得来，后一个为质量守恒方程。其中$\mathbf{f}$为外力产生的加速度，在本例中$\mathbf{f}=\mathbf{g}c$，$\mathbf{g}$为重力加速度，$c$为墨的浓度。而墨的浓度又会随液体流动变化：</p>
+$$\frac{\partial c}{\partial t} + \mathbf{u} \nabla c = 0$$
+<p>综合起来，共是三个偏微分方程。一种较简单的方法&#8220;分裂法&#8221;，即是将复杂方程分成几个简单方程分别求解，再将结果叠加起来。本例中，先施加重力，接着输运速度，再令速度满足质量守恒方程，最后用得到的速度输运墨的浓度。其中最复杂的是令速度满足质量守恒方程，即使速度场为无源场。这过程又被称为亥姆霍兹分解，指的是将矢量场分解为无源场和无旋场之和。本例中使用快速傅立叶来完成此分解，不需要计算压力值。利用FFT，可将速度表示为：</p>
+$$u_x = \sum_{k = 0}^{M-1}\sum_{l = 0}^{N-1}\mathcal{F}(u_x)_{kl}e^{2\pi i(\frac kM x+\frac lN y)}$$
+$$u_y = \sum_{k = 0}^{M-1}\sum_{l = 0}^{N-1}\mathcal{F}(u_y)_{kl}e^{2\pi i(\frac kM x+\frac lN y)}$$
+<p>使速度场为无源场，即$\frac{\partial u_x}{\partial x}+\frac{\partial u_y}{\partial y} = 0$，将上两式代入，可得对每一个$k,l$：
+$\frac kM\mathcal{F}(u_x)_{kl} + \frac lN\mathcal{F}(u_y)_{kl} = 0$。按照这个关系，将FFT的结果投影到和$(k,l)$垂直的方向上，就得到了一个无源场。
+&#8220;A Simple Fluid Solver based on the FFT&#8221;文章中的图形形象地表达了这个过程。</p>
+<p>在实现方面，如果是用C之类的语言的话，实现起来应比较容易，因为有现成的快速傅立叶库可用。不过我没找到之前有人写过基于WebGL的快速傅立叶实现，只好自己写一个。由于这方面我之前没接触过，实现起来费了不少力气。我采用的方法是<a href="http://www.sandia.gov/~kmorel/documents/fftgpu">The FFT on a GPU</a>。尽管我也只是半懂，感觉其中的&#8220;Index Magic&#8221;还是很有意思的。文中介绍的是基为2时的情形，但要扩展到基为其它值以及向量基的情况是很容易的。因为计算的是两组实数的FFT，还采用了文中的将两实数组成一复数计算FFT的策略。这一步骤在文中被称为&#8220;Tangle/Untangle&#8221;。不过这一过程可以在完成二维FFT后再进行，不必在每一方向的FFT后都加上一步，因为二维实数FFT也有和一维相应的共轭对称关系。采用和文中相似的记法，$M\times N$的二维实数$f(x,y),g(x,y)$对应的FFT结果为$F(u,v),G(u,v)$，令$h(x,y)=f(x,y)+jg(x,y)$，计算FFT得$H(u,v)$。可由$H(u,v)$得到$F(u,v),G(u,v)$：</p>
+$$F(u,v)_R = \frac12 \left(H(u,v)_R+H(M-u,N-v)_R\right)$$
+$$F(u,v)_I = \frac12 \left(H(u,v)_I-H(M-u,N-v)_I\right)$$
+$$G(u,v)_R = \frac12 \left(H(u,v)_I+H(M-u,N-v)_I\right)$$
+$$G(u,v)_I = -\frac12 \left(H(u,v)_R-H(M-u,N-v)_R\right)$$
+<p>求逆变换时，反过来利用公式就行了。这样向量基的FFT算法也可应用了。本仿真中就用了向量基的FFT，比起做两个方向的FFT要快不少。不过我还没懂究竟怎样的代码在WebGL中较快，因我发现这和运行在CPU上的代码有不同。</p>
+<p>其实之中还有不少细节我还不完全清楚，还望大家多多指点。</p>
+</div>
+                    <div class="post_footer">
+                        
+                        <div class="meta">
+                            <div class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                    <a href="https://wildabc.github.io/cnblogs/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                
+                <div class="doc_comments"></div>
+                
+            </div>
+        </div>
+    </div>
+    <a id="back_to_top" href="#" class="back_to_top"><i class="ri-arrow-up-s-line"></i></a>
+    <footer class="footer">
+    <div class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div class="footer_slogan">
+        <span></span>
+    </div>
+</footer>
+    <script src="https://wildabc.github.io/cnblogs/js/jquery-3.5.1.min.js"></script>
+<link href="https://wildabc.github.io/cnblogs/css/fancybox.min.css" rel="stylesheet">
+<script src="https://wildabc.github.io/cnblogs/js/fancybox.min.js"></script>
+<script src="https://wildabc.github.io/cnblogs/js/zozo.js"></script>
+
+
+
+
+</body>
+
+</html>

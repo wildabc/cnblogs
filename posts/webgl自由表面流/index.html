@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-cn" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="" />
+	
+	
+	
+	<title>WebGL自由表面流 ｜ 枣木夹子</title>
+	
+    
+    
+    <meta name="description" content="又是一个用WebGL实现的液体仿真（点图）。这次是自由表面流的仿真，可以理解为被隐形的墙挡住的水，在墙突然消失后运动。蓝色代表液体，红色显示" />
+    
+
+    
+
+	
+    
+    <link rel="shortcut icon" href="https://wildabc.github.io/cnblogs/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/highlight.css" />
+
+    
+    
+    <link rel="stylesheet" href="https://wildabc.github.io/cnblogs/css/custom.css" />
+    
+</head>
+
+<body>
+    <div class="main animate__animated animate__fadeInDown">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul>
+            
+            <li>
+                <a href="/cnblogs/posts/">总目</a>
+            </li>
+            
+            <li>
+                <a href="/cnblogs/tags/">标签</a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://wildabc.github.io/cnblogs/">
+                    <span>枣木夹子</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title"></p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/wildabc/" title="github" target="_blank"><i class="ri-github-fill"></i></a>
+                
+                
+                
+                <a href="mailto:wildabc@qq.com" title="mail" target="_blank"><i class="ri-mail-fill"></i></a>
+                
+                
+                <a href="" type="application/rss+xml" title="rss" target="_blank"><i
+                        class="ri-rss-fill"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2><a href='/cnblogs/posts/webgl%E8%87%AA%E7%94%B1%E8%A1%A8%E9%9D%A2%E6%B5%81/'>WebGL自由表面流</a></h2>
+                        <span class="date">2012.10.03</span>
+                    </div>
+                    <div class="post_content markdown">
+<p>又是一个用WebGL实现的液体仿真（点图）。这次是自由表面流的仿真，可以理解为被隐形的墙挡住的水，在墙突然消失后运动。蓝色代表液体，红色显示的是x方向的速度，绿色显示的是y方向的速度。</p>
+<p style="color: gray;">我收到反馈说这个仿真没有提供任何控制，和录制的视频没多少区别。说的也对，我对这个仿真没什么信心，还没想到要加点交互。我使劲想了想，给它加了点小变化：在页面地址后加上?droplet或?text可以看到不同的初始形状。</p>
+<p><a href="http://wildabc.github.com/WebGL/FLIP.html" target="_blank"><img style="border: 1px solid black;" src="http://images.cnblogs.com/cnblogs_com/wildabc/flip.png" alt="FLIP DEMO" /></a></p>
+<p>酷壳上的一篇<a href="http://coolshell.cn/articles/3421.html">文章</a>介绍了一个从Java开始，被一串语言实现了的流体力学演示（再补充两个移动版本：<a href="http://www.infi.nl/blog/view/id/98/Liquid_on_iPhone_and_iPad" target="_blank">iOS</a>和<a href="https://play.google.com/store/apps/details?id=com.bipmo.waterworks.app" target="_blank">Android</a>）。下面有个评论说用的方法是SPH(Smoothed-Particle Hydrodynamics)，不过最初的，也就是Java版的作者已经说明了使用的方法是MPM(Material Point Method)。SPH是全粒子方法，而MPM是粒子和网格并用。Java版包含的物质属性很多，或者说得拗口点，表达的本构关系很复杂，不能只说是&#8220;流体力学&#8221;演示，它比后面其它语言版本的内容更丰富。不过Java版并没有公布源代代码，作者只是提到了两篇论文，大概是关于插值方法方面的，它的具体实现的方法就不得而知了。ActionScript版则有源码，其他语言中的具体方法大概是从ActionScript版学来的。</p>
+<p>这里所要求解的是气液两相流问题。因气体的密度和粘度远小于液体，可认为气体完全随液体而运动。某些情况下，可进一步简化认为气体的压力都等于某一参考值（本仿真设定液体在一完全密闭的空间中，可能并不适用这一简化）。这时只在液体部分建立方程，而在气液界面上应用前述的边界条件。具体的方法就很多了，汗牛充栋。这篇论文<a href="http://www.cs.ubc.ca/~rbridson/docs/zhu-siggraph05-sandfluid.pdf">Animating sand as a fluid</a>讲的是沙子和不可压缩流体的仿真，用的方法是FLIP(FLuid Implicit Particle)和PIC(Particle In Cell)的混合。FLIP和前述的MPM都是从PIC发展而来，是粒子和网格并用的方法。粒子携带部分信息在网格中移动，和网格会有一些信息交换，粒子同时起到标记的作用，标出哪些网格是液体。FLIP和PIC的不同之处在于从网格更新粒子信息时方法，FLIP减少了这一步带来的数值粘性。论文作者还提供了<a href="http://www.cs.ubc.ca/~rbridson/download/simple_flip2d.tar.gz">源代码下载</a>和视频（<a href="http://www.cs.ubc.ca/~rbridson/">作者页面</a>上有好几个）。文中方法和前面ActionScript版相比，主要差别在液体压力计算上：ActionScript版中是以网格点周围粒子的数量来计算该点的压力，而这篇文章中则把速度从粒子插值到网格上，再求解压力场以使速度场为无源场。从效果看，ActionScript版中可见液体的膨胀和收缩，而文中方法在不可压缩性这点上表现更好。</p>
+<p>我主要就是模仿这篇文章，不过步骤简化了很多。文中用的是MAC交错网格，我只是把变量放在一起。文章中用了自动调整的时间步长，在本仿真中步长是固定的。文中方法一个重要的部分是计算距离场，再利用距离场来做外插。这些在我这全部都略去了，只是将与液体相邻的气体网格中值作了简单地假定：速度与液体相同而压力则与液体相反（使界面上的压力值为参考值&#8212;&#8212;0）。由于一个气体网格可能与多个液体网格相邻，所以气体网格中的值可能是多值的。至于这样是否合理，我也没仔细想过。整个过程中计算量最大的部分，也就是压力场泊松方程的求解，文章中用的是以改进的不完全柯列斯基分解(Modified incomplete Cholesky factorization)为预条件的共轭梯度法(Preconditioned conjugate gradient)。<del>这个名字实在太长。</del>这个用WebGL实现起来比较难，我是没想到什么办法。但是只用雅科比迭代(Jacobi iteration)话，在网格较细时，收敛很慢，效果是很差的。我之前一篇博客用过快速傅立叶，在这里就不适用了，这里采用的是多重网格(Multigird)。</p>
+<p>多重网格的思想是将方程的残差中的低频部分放在较粗的网格上处理，以加快收敛速度。个人的直观见解（很可能不准确甚至错误），就是用简单迭代法解差分方程时，信息在网格上总是一个格子点传到其相邻的格子点上（不同的差分格式可能对相邻的定义不同）。在网格较细时，格子之间的距离很小，信息扩散的速度就很慢。如果用较粗的网来辅助就可以加快信息扩散速度。<a href="http://mchouza.wordpress.com/2011/02/21/gpgpu-with-webgl-solving-laplaces-equation/">这篇博客</a>上有介绍和WebGL演示。 说到多重网格，我又想起这篇文章<a href="http://graphics.cs.cmu.edu/projects/gradient-paint/">Real-Time Gradient-Domain Painting</a>，它就是用多重网格解泊松方程。几年前看到其所附的视频，觉得好神奇。当时我自己的电脑显卡还不支持演示软件的运行，后来才知道软件并没有视频中那么强的功能。现在回头来看，当时写着色器还要考虑不同显卡，而现在在浏览器中就可以实现，技术进步真的很快。按书上说，多重网格方法中的几个关键步骤：限制(Restriction)、延拓(Prolongation)、粗网格上算子(Coase grid operator)的构造都有很多要注意的地方，不过后面所列的用多重网格解流体力学的论文也没深入讨论这些。我则从简便出发，主要考虑利用WebGL本身的纹理插值来实现限制和延拓。粗网格上算子的构造，伽辽金近似(Galerkin approximation)应该是个好方法，前面的Gradient Painting就是用的这个方法，但在边界条件很复杂的情况下，用WebGL好像实现不了。我用的办法连我自己也觉得很糊涂，就不介绍了。另外，仿真中还应用了文献3中提到的对压力的修正，使得液体更容易从壁面上分离。</p>
+<p>由于本人在理论和写代码的功力上都有很多不足，最后呈现在这里的结果远称不上完整。整个模型有很多参数，不少是多重网格相关的，但我不知参数设定的是否合理。另外，初始液体的形状可以是任意的。不过我并没有设计界面来设定参数或形状。如果有人有兴趣，可以把页面下载下来后自己修改代码最后面的main()函数（希望你能看懂）。液体在开始时翻腾得很厉害，个人感觉挺不真实的。初始液体的体积为窗口的1/4，在翻腾时会达到30%，而随着液体渐渐平静，体积也在慢慢减少，一直运行下去液体会干掉的吧（我的浏览器不时崩溃，所以从未运行足够久）。不可压缩的流体，体积应该是不变的呀。虽然还有不少问题，不过目前我也只能做到这个水平了，如果您有什么高招，还望不吝赐教。</p>
+<p>还有两个问题，请高人解答一下。一是着色器中对for循环的使用有很多限制，可是把一句代码写几遍能实现的功能，为什么不能用for呢？另一个是和framebuffer相连、作为渲染对象的纹理的大小好像不能超过图形窗口的大小，否则虽然可以运行，但结果并不是预期的那样。</p>
+<p>文中专业用语我都尽量用中文，如有不确的还望指正。 虽然上面几乎并有明确的引用，主要的参考文献都列在下面。另外维基词典真是好东西。</p>
+<ol>
+     <li>Y. Zhu, R. Bridson: Animating sand as a fluid.</li>
+     <li>Jos Stam: Real-Time Fluid Dynamics for Games.</li>
+     <li>N. Chentanez, M. M&#252;ller: A multigrid fluid pressure solver handling separating solid boundary conditions.</li>
+     <li>R. Bridson: Fluid Simulation for Computer Graphics.</li>
+     <li>A. McAdams, E. Sifakis, J. Teran: parallel multigrid Poisson solver for fluids simulation onlarge grids.</li>
+     <li>J. McCann, N. Pollard: Real-Time Gradient-Domain Painting.</li>
+     <li>U. Trottenberg, C. Oosterlee, A. Sch&#252;ller: Multigrid.</li>
+     <li>A. Munshi, D. Ginsburg, D. Shreiner: OpenGL ES 2.0 Programming Guide.</li>
+</ol>
+<hr />
+<p>从我有想法做这样一个仿真到现在已经快一年了。当时觉得没一年时间搞不定，没想真的花了一年。刚开始基本什么都不懂，慢慢地学习。虽然现在浏览器的JavaScript性能大幅提升，但用JavaScript本身计算能力还是远不够。这时看到Evgeny Demidov写的流体仿真（之前一篇博客有介绍），还是下决心用WebGL。虽然之前也学了一点WebGL，其实并没弄懂，好在现在移动开发正火，讲OpenGL ES的书多，而WebGL正是由OpenGL ES而来。对流体力学也不懂，计算方法换了几个，终于有个看得过去的结果。写点东西记下来，免得以后自己都不知道是怎么凑出这么个玩意的。</p></div>
+                    <div class="post_footer">
+                        
+                        <div class="meta">
+                            <div class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                    <a href="https://wildabc.github.io/cnblogs/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                
+                <div class="doc_comments"></div>
+                
+            </div>
+        </div>
+    </div>
+    <a id="back_to_top" href="#" class="back_to_top"><i class="ri-arrow-up-s-line"></i></a>
+    <footer class="footer">
+    <div class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div class="footer_slogan">
+        <span></span>
+    </div>
+</footer>
+    <script src="https://wildabc.github.io/cnblogs/js/jquery-3.5.1.min.js"></script>
+<link href="https://wildabc.github.io/cnblogs/css/fancybox.min.css" rel="stylesheet">
+<script src="https://wildabc.github.io/cnblogs/js/fancybox.min.js"></script>
+<script src="https://wildabc.github.io/cnblogs/js/zozo.js"></script>
+
+
+
+
+</body>
+
+</html>

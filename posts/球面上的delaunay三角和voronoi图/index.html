@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-cn" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="" />
+	
+	
+	
+	<title>球面上的Delaunay三角和Voronoi图 ｜ 枣木夹子</title>
+	
+    
+    
+    <meta name="description" content="本博客前面讨论的Delaunay三角和Voronoi图都是针对平面上的情形，而球面上也可定义相应的概念。这些几何结构常常是很有用的，因为我们" />
+    
+
+    
+
+	
+    
+    <link rel="shortcut icon" href="https://wildabc.github.io/cnblogs/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/highlight.css" />
+
+    
+    
+    <link rel="stylesheet" href="https://wildabc.github.io/cnblogs/css/custom.css" />
+    
+</head>
+
+<body>
+    <div class="main animate__animated animate__fadeInDown">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul>
+            
+            <li>
+                <a href="/cnblogs/posts/">总目</a>
+            </li>
+            
+            <li>
+                <a href="/cnblogs/tags/">标签</a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://wildabc.github.io/cnblogs/">
+                    <span>枣木夹子</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title"></p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/wildabc/" title="github" target="_blank"><i class="ri-github-fill"></i></a>
+                
+                
+                
+                <a href="mailto:wildabc@qq.com" title="mail" target="_blank"><i class="ri-mail-fill"></i></a>
+                
+                
+                <a href="" type="application/rss+xml" title="rss" target="_blank"><i
+                        class="ri-rss-fill"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2><a href='/cnblogs/posts/%E7%90%83%E9%9D%A2%E4%B8%8A%E7%9A%84delaunay%E4%B8%89%E8%A7%92%E5%92%8Cvoronoi%E5%9B%BE/'>球面上的Delaunay三角和Voronoi图</a></h2>
+                        <span class="date">2010.04.04</span>
+                    </div>
+                    <div class="post_content markdown">
+本博客前面讨论的Delaunay三角和Voronoi图都是针对平面上的情形，而球面上也可定义相应的概念。这些几何结构常常是很有用的，因为我们就住在地&#8220;球&#8221;上。
+<p>考虑这样一个问题：在中国，哪里是离国境最远的地方？经过一番思考，我觉得用球面上的Voronoi图来解这个问题是可行的。（可能有更好的办法，望告知。）</p>
+<p>计算球面上的Delaunay三角和Voronoi图是通过计算三维空间中的凸包来实现的，参见相关文章（推荐<a target="_blank" href="http://hal.archives-ouvertes.fr/docs/00/40/54/78/PDF/DT_sphere_RR.pdf">链接1</a>、<a target="_blank" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.95.3444&amp;rep=rep1&amp;type=pdf">链接2</a>）。我使用的工具是<a target="_blank" href="http://www.cgal.org/">CGAL</a>。而国境线的数据来自<a target="_blank" href="http://www.gelib.com/world-borders.htm">http://www.gelib.com/world-borders.htm</a>。世界各国的数据都有，但是较为简略。其中中国的部分只包括中国大陆，港澳台地区各自单独列出。下图就是国境线数据：</p>
+<p>&nbsp;<img alt="" src="http://images.cnblogs.com/cnblogs_com/wildabc/world_border.jpg" border="0" height="499" width="800" /></p>
+<p>有了数据以及方便的工具，剩下的事情其实是极简单的。我一开始还想自己写个程序来显示结果，后来发现把结果写为KML文件用谷歌地球来显示要方便多了。将各个数据点由经纬度值转为分布在单位球上的三维点。计算这些点的凸包。不失一般性，假定凸包表面的三角面的法矢指向凸包的外部，那么将法矢朝向球的外部的三角面投影到球面上，便得到了球面上的Delaunay三角。而三角面的法矢单位化后，从球心按此矢量偏移，可得到相应Delaunay三角的对偶顶点。遍历凸包表面上的边，将相邻三角面对应的的对偶顶点用以球心为圆心的圆弧连接，就生成了球面上的Voronoi图。如下图：<br />
+</p>
+<p><img alt="" src="http://images.cnblogs.com/cnblogs_com/wildabc/DelaunayVoronoiOnSphere.jpg" border="0" height="499" width="800" />&nbsp;</p>
+<p>还可由此计算medial axis:</p>
+<p>&nbsp;<img alt="" src="http://images.cnblogs.com/cnblogs_com/wildabc/MediaAxisOnSphere.jpg" border="0" height="499" width="800" /></p>
+<p>回到开始时的问题&#8212;&#8212;离国境最远的地方。 也就是Delaunay三角中外接圆最大的所对应的对偶顶点。如果不分国内国外，那么这点在智利以西的太平洋上，西经76.1677&#176;,南纬40.7443&#176;，距离约为8723km（按地球半径等于6371km计算，下同）。要得到在中国国内离国境最远的地方，那么只考虑在国境内的Delaunay三角即可。该点为东经108.173&#176;，北纬32.479&#176;，在陕西省汉中市<span>镇巴县，距离约为1050km</span>。<br />
+</p>
+<p>以上的计算由于使用的数据较简略，所以可能并不准确，不过方法应该是正确的。 &nbsp;</p>
+<p>最后附上使用<a target="_blank" href="http://meshlab.sourceforge.net/">Meshlab</a>做 的，和球面上Voronoi图相关的一个<a target="_blank" href="http://meshlabstuff.blogspot.com/2009/03/creating-voronoi-sphere.html">漂亮例子</a>（需翻防火墙）。&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt;"><a target="_blank" href="http://files.cnblogs.com/wildabc/D%26V_on_sphere.zip">下载链接</a></span><span style="font-size: 14pt;"></span><span style="font-size: 14pt;">（包含以上全部结果，不包括国境线数据，解压后用谷歌地球打开）</span></p>
+<p><span style="font-size: 14pt;"></span><a href="http://files.cnblogs.com/wildabc/D%26V_on_sphere_source.zip" target="_blank"><span style="font-size: 14pt;">源代码 </span></a><br />
+</p>
+</div>
+                    <div class="post_footer">
+                        
+                        <div class="meta">
+                            <div class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                    <a href="https://wildabc.github.io/cnblogs/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                
+                <div class="doc_comments"></div>
+                
+            </div>
+        </div>
+    </div>
+    <a id="back_to_top" href="#" class="back_to_top"><i class="ri-arrow-up-s-line"></i></a>
+    <footer class="footer">
+    <div class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div class="footer_slogan">
+        <span></span>
+    </div>
+</footer>
+    <script src="https://wildabc.github.io/cnblogs/js/jquery-3.5.1.min.js"></script>
+<link href="https://wildabc.github.io/cnblogs/css/fancybox.min.css" rel="stylesheet">
+<script src="https://wildabc.github.io/cnblogs/js/fancybox.min.js"></script>
+<script src="https://wildabc.github.io/cnblogs/js/zozo.js"></script>
+
+
+
+
+</body>
+
+</html>
