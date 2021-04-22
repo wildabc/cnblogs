@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="又是一个用WebGL实现的液体仿真（点图）。这次是自由表面流的仿真，可以理解为被隐形的墙挡住的水，在墙突然消失后运动。蓝色代表液体，红色显示" />
+    <meta name="description" content="又是一个用WebGL实现的液体仿真（点击图片以访问）。这次是自由表面流的仿真，可以理解为被隐形的墙挡住的水，在墙突然消失后运动。蓝色代表液体" />
     
 
     
@@ -88,9 +88,9 @@
                         <span class="date">2012.10.03</span>
                     </div>
                     <div class="post_content markdown">
-<p>又是一个用WebGL实现的液体仿真（点图）。这次是自由表面流的仿真，可以理解为被隐形的墙挡住的水，在墙突然消失后运动。蓝色代表液体，红色显示的是x方向的速度，绿色显示的是y方向的速度。</p>
+<p>又是一个用WebGL实现的液体仿真（点击图片以访问）。这次是自由表面流的仿真，可以理解为被隐形的墙挡住的水，在墙突然消失后运动。蓝色代表液体，红色显示的是x方向的速度，绿色显示的是y方向的速度。</p>
 <p style="color: gray;">我收到反馈说这个仿真没有提供任何控制，和录制的视频没多少区别。说的也对，我对这个仿真没什么信心，还没想到要加点交互。我使劲想了想，给它加了点小变化：在页面地址后加上?droplet或?text可以看到不同的初始形状。</p>
-<p><a href="http://wildabc.github.com/WebGL/FLIP.html" target="_blank"><img style="border: 1px solid black;" src="http://images.cnblogs.com/cnblogs_com/wildabc/flip.png" alt="FLIP DEMO" /></a></p>
+<p><a href="http://wildabc.github.com/WebGL/FLIP.html" target="_blank"><img style="border: 1px solid black;" src="../../images/flip.png" alt="FLIP DEMO" /></a></p>
 <p>酷壳上的一篇<a href="http://coolshell.cn/articles/3421.html">文章</a>介绍了一个从Java开始，被一串语言实现了的流体力学演示（再补充两个移动版本：<a href="http://www.infi.nl/blog/view/id/98/Liquid_on_iPhone_and_iPad" target="_blank">iOS</a>和<a href="https://play.google.com/store/apps/details?id=com.bipmo.waterworks.app" target="_blank">Android</a>）。下面有个评论说用的方法是SPH(Smoothed-Particle Hydrodynamics)，不过最初的，也就是Java版的作者已经说明了使用的方法是MPM(Material Point Method)。SPH是全粒子方法，而MPM是粒子和网格并用。Java版包含的物质属性很多，或者说得拗口点，表达的本构关系很复杂，不能只说是&#8220;流体力学&#8221;演示，它比后面其它语言版本的内容更丰富。不过Java版并没有公布源代代码，作者只是提到了两篇论文，大概是关于插值方法方面的，它的具体实现的方法就不得而知了。ActionScript版则有源码，其他语言中的具体方法大概是从ActionScript版学来的。</p>
 <p>这里所要求解的是气液两相流问题。因气体的密度和粘度远小于液体，可认为气体完全随液体而运动。某些情况下，可进一步简化认为气体的压力都等于某一参考值（本仿真设定液体在一完全密闭的空间中，可能并不适用这一简化）。这时只在液体部分建立方程，而在气液界面上应用前述的边界条件。具体的方法就很多了，汗牛充栋。这篇论文<a href="http://www.cs.ubc.ca/~rbridson/docs/zhu-siggraph05-sandfluid.pdf">Animating sand as a fluid</a>讲的是沙子和不可压缩流体的仿真，用的方法是FLIP(FLuid Implicit Particle)和PIC(Particle In Cell)的混合。FLIP和前述的MPM都是从PIC发展而来，是粒子和网格并用的方法。粒子携带部分信息在网格中移动，和网格会有一些信息交换，粒子同时起到标记的作用，标出哪些网格是液体。FLIP和PIC的不同之处在于从网格更新粒子信息时方法，FLIP减少了这一步带来的数值粘性。论文作者还提供了<a href="http://www.cs.ubc.ca/~rbridson/download/simple_flip2d.tar.gz">源代码下载</a>和视频（<a href="http://www.cs.ubc.ca/~rbridson/">作者页面</a>上有好几个）。文中方法和前面ActionScript版相比，主要差别在液体压力计算上：ActionScript版中是以网格点周围粒子的数量来计算该点的压力，而这篇文章中则把速度从粒子插值到网格上，再求解压力场以使速度场为无源场。从效果看，ActionScript版中可见液体的膨胀和收缩，而文中方法在不可压缩性这点上表现更好。</p>
 <p>我主要就是模仿这篇文章，不过步骤简化了很多。文中用的是MAC交错网格，我只是把变量放在一起。文章中用了自动调整的时间步长，在本仿真中步长是固定的。文中方法一个重要的部分是计算距离场，再利用距离场来做外插。这些在我这全部都略去了，只是将与液体相邻的气体网格中值作了简单地假定：速度与液体相同而压力则与液体相反（使界面上的压力值为参考值&#8212;&#8212;0）。由于一个气体网格可能与多个液体网格相邻，所以气体网格中的值可能是多值的。至于这样是否合理，我也没仔细想过。整个过程中计算量最大的部分，也就是压力场泊松方程的求解，文章中用的是以改进的不完全柯列斯基分解(Modified incomplete Cholesky factorization)为预条件的共轭梯度法(Preconditioned conjugate gradient)。<del>这个名字实在太长。</del>这个用WebGL实现起来比较难，我是没想到什么办法。但是只用雅科比迭代(Jacobi iteration)话，在网格较细时，收敛很慢，效果是很差的。我之前一篇博客用过快速傅立叶，在这里就不适用了，这里采用的是多重网格(Multigird)。</p>

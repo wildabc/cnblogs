@@ -12,7 +12,7 @@
 	
     
     
-    <meta name="description" content="Evgeny Demidov写了很多精彩的WebGL例子。其中我最感兴趣的是墨滴模拟。我把计算方法做了点改动，自己实现了一个：（点击图片） 原来的页面用的" />
+    <meta name="description" content="Evgeny Demidov写了很多精彩的WebGL例子。其中我最感兴趣的是墨滴模拟。我把计算方法做了点改动，自己实现了一个：（点击图片以访问） 原来的页" />
     
 
     
@@ -88,8 +88,13 @@
                         <span class="date">2012.04.30</span>
                     </div>
                     <div class="post_content markdown">
-<p>Evgeny Demidov写了很多精彩的<a href="http://www.ibiblio.org/e-notes/webgl/webgl.htm" target="_blank">WebGL例子</a>。其中我最感兴趣的是<a href="http://www.ibiblio.org/e-notes/webgl/gpu/droplet.htm" target="_blank">墨滴模拟</a>。我把计算方法做了点改动，自己实现了一个：（点击图片）</p>
-<a href="http://wildabc.github.com/WebGL/FFTDroplet.html" target="_blank"><img src="http://images.cnblogs.com/cnblogs_com/wildabc/fft_droplet.png" alt="FFT based droplet" style="border: 1px solid black" /></a>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.css" integrity="sha384-Cqd8ihRLum0CCg8rz0hYKPoLZ3uw+gES2rXQXycqnL5pgVQIflxAUDS7ZSjITLb5" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/katex.min.js" integrity="sha384-1Or6BdeNQb0ezrmtGeqQHFpppNd7a/gw29xeiSikBbsb44xu3uAo8c7FwbF5jhbd" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.2/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+
+<p>Evgeny Demidov写了很多精彩的<a href="http://www.ibiblio.org/e-notes/webgl/webgl.htm" target="_blank">WebGL例子</a>。其中我最感兴趣的是<a href="http://www.ibiblio.org/e-notes/webgl/gpu/droplet.htm" target="_blank">墨滴模拟</a>。我把计算方法做了点改动，自己实现了一个：（点击图片以访问）</p>
+<a href="http://wildabc.github.com/WebGL/FFTDroplet.html" target="_blank"><img src="../../images/fft_droplet.png" alt="FFT based droplet" style="border: 1px solid black" /></a>
 <p>原来的页面用的方法是Jos Stam的<a href="http://www.dgp.toronto.edu/people/stam/reality/Research/pub.html">Real-Time Fluid Dynamics for Games</a>和<a href="http://www.dgp.toronto.edu/people/stam/reality/Research/pub.html">Stable Fluid</a>，使用的是交错网格。不过在输运（不知道这是不是Advect的正确翻译）变量时，有些小问题，作者在页面上也做了注明。我总觉得其中以雅可比迭代解泊松方程显得有点&#8220;原始&#8221;，自己以前接触过用快速傅立叶解泊松方程，所以想试试。实际上如果使用FFT，不需要构造泊松方程，见Jos Stam的<a href="http://www.dgp.toronto.edu/people/stam/reality/Research/pub.html">A Simple Fluid Solver based on the FFT</a>，本例就是用的此方法。</p>
 <p>关于流体力学的基本知识，推荐Robert Bridson的<a href="http://www.dgp.toronto.edu/people/stam/reality/Research/pub.html">SIGGRAPH 2007 Course</a>。前列诸文献写得很好，这里只简要介绍一下基本知识和我使用的方法。对于这个仿真，可认为流体运动遵循不可压缩纳维叶－斯托克斯方程：</p>
 $$\frac{\partial \mathbf{u}}{\partial t} + \mathbf{u} \nabla \mathbf{u} + \frac1\rho \nabla p = \mathbf{f} + \nu \nabla\nabla \mathbf{u}$$
