@@ -229,7 +229,7 @@ r^3\frac{\partial^2 \psi}{\partial r^2} + 3r^2\frac{\partial \psi}{\partial r} +
 \end{aligned}
 \]</span> 可以看出，每一项只与<span class="math inline">\(\cos\theta\)</span>或只与<span class="math inline">\(\sin\theta\)</span>相关，而进一步得到的<span class="math inline">\(\sigma_z\)</span>只与<span class="math inline">\(\cos\theta\)</span>相关，也和边界条件一致，所以这样的假定是可行的。在计算虚功时，对<span class="math inline">\(\theta\)</span>积分会出现<span class="math inline">\(\int^{2\pi}_{0}\cos^2\theta d\theta\)</span>或<span class="math inline">\(\int^{2\pi}_{0}\sin^2\theta d\theta\)</span>，它们的值都是<span class="math inline">\(\pi/2\)</span>，从而可以从等式中消去，最终得到的方程与<span class="math inline">\(\theta\)</span>无关。原问题转化为关于<span class="math inline">\(\bar u_r\)</span>、<span class="math inline">\(\bar u_\theta\)</span>、<span class="math inline">\(\bar u_z\)</span>的二维问题。端部受力的边界条件同样可按照材料力学中的设定，正比于<span class="math inline">\(r\)</span>，比值为弯矩除以截面惯性矩。</p>
 <h2 id="具体实现">具体实现</h2>
-<p>能够自定义方程的有限元软件也有不少，本文中使用的是开源的FreeFem++。它的文档比较详细，老版本的文档有中文版，基本的用法与现版本是相同的。在手册中也给出了弹性力学的例子，不过没有使用矩阵来定义问题。个人觉得使用矩阵会更易懂，而且在FreeFem++中实现也很简单。关键点是，要用<em>func</em>而不是<em>matrix</em>来声明方程定义中需要的矩阵。以本文中最复杂的弯曲问题为例</p>
+<p>能够自定义方程的有限元软件也有不少，本文中使用的是开源的FreeFem++。它的文档比较详细，老版本的文档有中文版，基本的用法与现版本是相同的。在手册中也给出了弹性力学的例子，不过没有使用矩阵来定义问题。个人觉得使用矩阵会更易懂，而且在FreeFem++中实现也很简单。关键点是，要用<code>func</code>而不是<code>matrix</code>来声明方程定义中需要的矩阵。以本文中最复杂的弯曲问题为例</p>
 <pre><code>func D = E/(1+nu)/(1-2*nu)*
             [[1-nu, nu, nu, 0, 0, 0],
             [nu, 1-nu, nu, 0, 0, 0],
@@ -243,9 +243,10 @@ r^3\frac{\partial^2 \psi}{\partial r^2} + 3r^2\frac{\partial \psi}{\partial r} +
 <pre><code>int2d(Th) (epsilon(uz,ur,ut)&#39;*D*epsilon(vz,vr,vt)*y)</code></pre>
 <p>这里是以<span class="math inline">\(x\)</span>轴为柱坐标中的<span class="math inline">\(z\)</span>轴，<span class="math inline">\(y\)</span>轴为柱坐标中的<span class="math inline">\(r\)</span>轴。平面上微元<span class="math inline">\(dxdy\)</span>对应于柱坐标下的微体积<span class="math inline">\(2\pi ydxdy\)</span>，所以方程的积分中要乘上<span class="math inline">\(y\)</span>，<span class="math inline">\(2\pi\)</span>这个常数可以从方程两边消去。</p>
 <p>另外，前述应变公式中，有的分量中出现了<span class="math inline">\(1/r\)</span>，在<span class="math inline">\(r=0\)</span>时会出现奇异。所以，在作几何定义时，最好避开<span class="math inline">\(r=0\)</span>处，就是说，即使是实心轴，也可以在中心留一个微小的孔。</p>
-<img style="display: block; margin-left: auto; margin-right: auto;" src="https://pic4.zhimg.com/v2-c100e578b63ef455942a07aad9097e21_1440w.jpg" />
-<div style="text-align:center;">示例：椭圆弧过渡的应力集中</div>
-</div>
+<img src="https://pic4.zhimg.com/v2-c100e578b63ef455942a07aad9097e21_1440w.jpg" />
+<div style="text-align:center;">
+示例：椭圆弧过渡的应力集中
+</div></div>
                     <div class="post_footer">
                         
                         <div class="meta">
