@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-cn" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="" />
+	
+	
+	
+	<title>WebGL小练习 ｜ 枣木夹子</title>
+	
+    
+    
+    <meta name="description" content="WebGL小练习，模仿O3D的一个例子，刚学，很多都不懂。用支持WebGL的浏览器打开，详细的可以看Learning WebGL(中文翻译)。" />
+    
+
+    
+
+	
+    
+    <link rel="shortcut icon" href="https://wildabc.github.io/cnblogs/images/favicon.ico" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/zozo.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="https://wildabc.github.io/cnblogs/css/highlight.css" />
+
+    
+    
+    <link rel="stylesheet" href="https://wildabc.github.io/cnblogs/css/custom.css" />
+    
+</head>
+
+<body>
+    <div class="main animate__animated animate__fadeInDown">
+        <div class="nav_container animated fadeInDown">
+    <div class="site_nav" id="site_nav">
+        <ul>
+            
+            <li>
+                <a href="/cnblogs/posts/">总目</a>
+            </li>
+            
+            <li>
+                <a href="/cnblogs/tags/">标签</a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="menu_icon">
+        <a id="menu_icon"><i class="ri-menu-line"></i></a>
+    </div>
+</div>
+        <div class="header animated fadeInDown">
+    <div class="site_title_container">
+        <div class="site_title">
+            <h1>
+                <a href="https://wildabc.github.io/cnblogs/">
+                    <span>枣木夹子</span>
+                </a>
+            </h1>
+        </div>
+        <div class="description">
+            <p class="sub_title"></p>
+            <div class="my_socials">
+                
+                
+                <a href="https://github.com/wildabc/" title="github" target="_blank"><i class="ri-github-fill"></i></a>
+                
+                
+                
+                <a href="mailto:wildabc@qq.com" title="mail" target="_blank"><i class="ri-mail-fill"></i></a>
+                
+                
+                <a href="" type="application/rss+xml" title="rss" target="_blank"><i
+                        class="ri-rss-fill"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="content">
+            <div class="post_page">
+                <div class="post animate__animated animate__fadeInDown">
+                    <div class="post_title post_detail_title">
+                        <h2><a href='/cnblogs/posts/webgl%E5%B0%8F%E7%BB%83%E4%B9%A0/'>WebGL小练习</a></h2>
+                        <span class="date">2010.06.27</span>
+                    </div>
+                    <div class="post_content markdown">
+<p>WebGL小练习，模仿O3D的一个例子，刚学，很多都不懂。用支持WebGL的浏览器打开，详细的可以看<a href="http://learningwebgl.com/blog/?p=11" target="_blank">Learning WebGL</a>(<a href="http://article.yeeyan.org/view/centaurtek/100348">中文翻译</a>)。&nbsp;</p>
+<p>一段时间没来看，发现WebGL的标准又有新的变化，新的浏览器无法运行原先的程序，又做了修改。 发到计算机图形学小组里，了解下国内做这个的多么。</p>
+<p><a href="http://code.google.com/p/webglsamples">http://code.google.com/p/webglsamples/</a> 有几个很漂亮的例子，有兴趣的可以看一下。 <br />
+</p>
+<script type="text/javascript" src="../../js/sylvester.js"></script><script type="text/javascript" src="../../js/glUtils.js"></script>
+<script id="shader-fs" type="x-shader/x-fragment">
+      #ifdef GL_ES
+        precision highp float;
+      #endif
+      uniform vec3 uLightPos;
+      uniform vec3 uCameraPos;
+      varying vec3 vPosition;
+      varying vec3 vNormal;
+      void main(void) {
+        vec3 lightDirection = normalize(uLightPos-vPosition);
+        float DiffusionWeighting = max(dot(lightDirection,vNormal),0.0);
+        vec3 cameraDirection = normalize(uCameraPos-vPosition);
+        vec3 reflectionDirection = normalize(reflect(-lightDirection,vNormal));
+        float specular = pow(max(dot(reflectionDirection,cameraDirection),0.0),10.0);
+        gl_FragColor = vec4(vec3(0.0, 0.6, 0.7)*DiffusionWeighting+specular,1.0);
+        }
+</script><script id="shader-vs" type="x-shader/x-vertex">
+      #ifdef GL_ES
+        precision highp float;
+      #endif
+      attribute vec3 aVertexPosition;
+      uniform mat4 uMVMatrix;
+      uniform mat4 uPMatrix;
+      uniform vec3 uLightPos;
+      uniform vec3 uCameraPos;
+      uniform float uClock;
+      varying vec3 vPosition;
+      varying vec3 vNormal;
+      float waving(vec2 xy)
+      {
+        float d = length(xy);
+        return 0.15 * sin(15.0 * d - 5.0 * uClock) / (1.0 + d * d); 
+      }
+      void main(void)
+      {
+        vec3 position = aVertexPosition;
+        position.z = waving(aVertexPosition.xy);
+        gl_Position = uPMatrix * uMVMatrix * vec4(position, 1.0);
+        vPosition = aVertexPosition;
+        float h =0.001;
+        vNormal = normalize(vec3(waving(vec2(aVertexPosition.x+h,aVertexPosition.y))-waving(vec2(aVertexPosition.x-h,aVertexPosition.y)),
+        waving(vec2(aVertexPosition.x,aVertexPosition.y+h))-waving(vec2(aVertexPosition.x,aVertexPosition.y-h)),2.0*h));
+      }
+</script><script type="text/javascript">
+      window.onload = webGLStart;
+      var gl;
+      function initGL(canvas) {
+        try {
+          gl = canvas.getContext("experimental-webgl");
+          gl.viewportWidth = canvas.width;
+          gl.viewportHeight = canvas.height;
+        } catch(e) {
+        }
+        if (!gl) {
+          alert("Could not initialise WebGL, sorry :-(");
+        }
+      }
+      function getShader(gl, id) {
+        var shaderScript = document.getElementById(id);
+        if (!shaderScript) {
+          return null;
+        }
+        var str = "";
+        var k = shaderScript.firstChild;
+        while (k) {
+          if (k.nodeType == 3) {
+            str += k.textContent;
+          }
+          k = k.nextSibling;
+        }
+        var shader;
+        if (shaderScript.type == "x-shader/x-fragment") {
+          shader = gl.createShader(gl.FRAGMENT_SHADER);
+        } else if (shaderScript.type == "x-shader/x-vertex") {
+          shader = gl.createShader(gl.VERTEX_SHADER);
+        } else {
+          return null;
+        }
+        gl.shaderSource(shader, str);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          alert(gl.getShaderInfoLog(shader));
+          return null;
+        }
+        return shader;
+      }
+      var shaderProgram;
+      function initShaders() {
+        var fragmentShader = getShader(gl, "shader-fs");
+        var vertexShader = getShader(gl, "shader-vs");
+        shaderProgram = gl.createProgram();
+        gl.attachShader(shaderProgram, vertexShader);
+        gl.attachShader(shaderProgram, fragmentShader);
+        gl.linkProgram(shaderProgram);
+        if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+          alert("Could not initialise shaders");
+        }
+        gl.useProgram(shaderProgram);
+        shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
+        gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
+        shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
+        shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+        shaderProgram.cameraPositionUniform = gl.getUniformLocation(shaderProgram,"uCameraPos");
+        shaderProgram.lightPosistionUniform = gl.getUniformLocation(shaderProgram, "uLightPos");
+        shaderProgram.clockUniform = gl.getUniformLocation(shaderProgram,"uClock");
+      }
+      var mvMatrix;
+      function loadIdentity() {
+        mvMatrix = Matrix.I(4);
+      }
+      function multMatrix(m) {
+        mvMatrix = mvMatrix.x(m);
+      }
+      function mvTranslate(v) {
+        var m = Matrix.Translation($V([v[0], v[1], v[2]])).ensure4x4();
+        multMatrix(m);
+      }
+      function mvRotate(ang, v) {
+        var arad = ang * Math.PI / 180.0;
+        var m = Matrix.Rotation(arad, $V([v[0], v[1], v[2]])).ensure4x4();
+        multMatrix(m);
+      }
+      function mvLookAt(eye,target,up)
+      {
+        var vz = ($V(eye).subtract($V(target))).toUnitVector();
+        var vx = $V(up).cross(vz).toUnitVector();
+        var vy = vz.cross(vx);
+        var m = $M([
+[vx.e(1),vy.e(1),vz.e(1),eye[0]],
+[vx.e(2),vy.e(2),vz.e(2),eye[1]],
+[vx.e(3),vy.e(3),vz.e(3),eye[2]],
+[0,0,0,1]
+]);
+        multMatrix(m.inverse());
+      }
+      var pMatrix;
+      function perspective(fovy, aspect, znear, zfar) {
+        pMatrix = makePerspective(fovy, aspect, znear, zfar);
+      }
+      function setMatrixUniforms() {
+        gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, new Float32Array(pMatrix.flatten()));
+        gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, new Float32Array(mvMatrix.flatten()));
+      }
+      var triangleVertexPositionBuffer;
+      var squareVertexPositionBuffer;
+      var planeVertexBuffer;
+      var planeIndexBuffer;
+      function initBuffers() {
+        triangleVertexPositionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexPositionBuffer);
+        var vertices = [
+             0.0, 1.0, 0.0,
+            -1.0, -1.0, 0.0,
+             1.0, -1.0, 0.0
+        ];
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+        triangleVertexPositionBuffer.itemSize = 3;
+        triangleVertexPositionBuffer.numItems = 3;
+        squareVertexPositionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, squareVertexPositionBuffer);
+        vertices = [
+             1.0, 1.0, 0.0,
+            -1.0, 1.0, 0.0,
+             1.0, -1.0, 0.0,
+            -1.0, -1.0, 0.0
+        ];
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+        squareVertexPositionBuffer.itemSize = 3;
+        squareVertexPositionBuffer.numItems = 4;
+        var plane = new Plane(4,4,200,200);
+        planeVertexBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, planeVertexBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(plane.vertices), gl.STATIC_DRAW);
+        planeVertexBuffer.itemSize = 3;
+        planeVertexBuffer.numItems = plane.vertices.length/3;
+        planeIndexBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, planeIndexBuffer);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(plane.indices), gl.STATIC_DRAW);
+        planeIndexBuffer.itemSize = 1;
+        planeIndexBuffer.numItems = plane.indices.length;
+      }
+      function drawScene() {
+        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        perspective(30, gl.viewportWidth / gl.viewportHeight, 1, 5000);
+        loadIdentity();
+        var eye = [4,4,4];
+        var target = [0,0,0];
+        var up = [0,0,1];
+        mvLookAt(eye,target,up);
+        gl.uniform3fv(shaderProgram.cameraPositionUniform,eye);
+        gl.uniform3f(shaderProgram.lightPosistionUniform,-4,-4,10);
+        time = time+15;
+        gl.uniform1f(shaderProgram.clockUniform,time/1000);
+        gl.bindBuffer(gl.ARRAY_BUFFER, planeVertexBuffer);
+        gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, planeVertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, planeIndexBuffer);
+        setMatrixUniforms();
+        gl.drawElements(gl.TRIANGLES, planeIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+      }
+      var time;
+      function webGLStart() {
+        var canvas = document.getElementById("lesson01-canvas");
+        initGL(canvas);
+        initShaders();
+        initBuffers();
+        gl.clearColor(0.5, 0.5, 0.5, 1.0);
+        gl.clearDepth(1.0);
+        gl.enable(gl.DEPTH_TEST);
+        gl.depthFunc(gl.LEQUAL);
+        setInterval(drawScene, 15);
+        time = 0.0;
+      }
+function Plane(w,h,wi,hi)
+{
+      this.width = w;
+      this.height = h;
+      this.width_sub = wi;
+      this.height_sub = hi;
+      this.vertices = new Array((wi+1)*(hi+1)*3);
+      dx = w/wi;
+      dy = h/hi;
+      for (i = 0 ; i <= wi ; i++)
+      {
+        for (j = 0 ; j <= hi ; j++)
+        {
+          this.vertices[(i*(hi+1)+j)*3] = -w/2+i*dx;
+          this.vertices[(i*(hi+1)+j)*3+1] = -h/2+j*dy;
+          this.vertices[(i*(hi+1)+j)*3+2] = 0;
+        }
+      }
+      this.indices = new Array(wi*hi*2*3)
+      for (i = 0 ; i < wi ; i++)
+      {
+        for (j = 0 ; j < hi ; j++)
+        {
+          this.indices[(i*hi+j)*6] = (i*(hi+1)+j);
+          this.indices[(i*hi+j)*6+1] = (i*(hi+1)+j)+1;
+          this.indices[(i*hi+j)*6+2] = (i*(hi+1)+j)+wi+1;
+          this.indices[(i*hi+j)*6+3] = (i*(hi+1)+j)+wi+2;
+          this.indices[(i*hi+j)*6+4] = (i*(hi+1)+j)+wi+1;
+          this.indices[(i*hi+j)*6+5] = (i*(hi+1)+j)+1;
+        }
+      }
+}
+</script><canvas id="lesson01-canvas" style="border: medium none;" width="500" height="500"></canvas>
+</div>
+                    <div class="post_footer">
+                        
+                        <div class="meta">
+                            <div class="info">
+                                <span class="field tags">
+                                    <i class="ri-stack-line"></i>
+                                    
+                                    <a href="https://wildabc.github.io/cnblogs/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a>
+                                    
+                                    <a href="https://wildabc.github.io/cnblogs/tags/javascript/">JavaScript</a>
+                                    
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+                
+                <div class="doc_comments"></div>
+                
+            </div>
+        </div>
+    </div>
+    <a id="back_to_top" href="#" class="back_to_top"><i class="ri-arrow-up-s-line"></i></a>
+    <footer class="footer">
+    <div class="powered_by">
+        <a href="https://varkai.com">Designed by VarKai,</a>
+        <a href="http://www.gohugo.io/">Proudly published with Hugo</a>
+    </div>
+
+    <div class="footer_slogan">
+        <span></span>
+    </div>
+</footer>
+    <script src="https://wildabc.github.io/cnblogs/js/jquery-3.5.1.min.js"></script>
+<link href="https://wildabc.github.io/cnblogs/css/fancybox.min.css" rel="stylesheet">
+<script src="https://wildabc.github.io/cnblogs/js/fancybox.min.js"></script>
+<script src="https://wildabc.github.io/cnblogs/js/zozo.js"></script>
+
+
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'G-HN5K3R2R3K', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</body>
+
+</html>
