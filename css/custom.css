@@ -12,6 +12,11 @@ p.noindent{
     text-indent: 0;
 }
 
+p img:only-child {
+    display: block;
+    margin: 0 auto;
+}
+
 @font-face {
     font-family: 'TITLE';
     src: url('title.woff');
